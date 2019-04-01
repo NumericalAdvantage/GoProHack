@@ -14,7 +14,7 @@ we can connect to the camera from the PC - i.e. the name of the access point and
 [This is a script](https://gitlab.hrz.tu-chemnitz.de/righ--tu-chemnitz.de/righ-gopro-wifi-remotecontrol_poc/blob/master/GP_Record.py) that implements the above method and can be expanded with new information from [this project on github](https://github.com/KonradIT/goprowifihack) which was also the central source of this part of the remote control.
 
 ## 2.  Smart remote  
-#### This is when we use a router to create a fake access point to which we connect our GoPro(s) and the computer which we want to use to send commands to the GoPro(s). The GoPro is made to believe it is connecting to a GoPro Smart Remote however what is actually happening is that the GoPro is connecting to the access point created by the router to which our "remote control computer" is also connected. We send commands to this GoPro by sending UDP messages to it via the computer.
+#### This is when we use a router to create a fake access point to which we connect our GoPro(s) and the computer which we want to use to send commands to the GoPro(s). The GoPro is made to believe it is connecting to a GoPro Smart Remote however what is actually happening is that the GoPro is connecting to the access point created by the router to which our "remote control computer" is also connected. We send commands to this GoPro by sending UDP messages to it via the computer. The router used was a LINKSYS Wireless-G broadband Router. Model Number: WRT54GL v1.1. Firmware: DD-WRT v24-sp2 (08/07/10)
 
 ##### Steps to configure the router:
 1. Power up and hold the rest button for 30 secs.
