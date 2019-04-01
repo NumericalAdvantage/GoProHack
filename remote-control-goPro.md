@@ -62,7 +62,12 @@ we can connect to the camera from the PC - i.e. the name of the access point and
   4. Now send various UDP commands to the connected GoPro from the bash shell of the computer and see what happens on the GoPro.
 5. After a while a few commands were discovered by the hit and trial method described above.
 
-## 3. List of commands.
+## 3. Connecting two Go Pro's to a computer.
+#### The aim here is to get more than one Go Pro connected together to the wireless access point (as described in point 2) such that we are able to send independent commands to the Go Pro's.
+
+The configuration for the router needs to be made as discussed in point 2. After that, just switching on multiple goPro's and trying to pair them using Smart Remote leads to them being getting latched on to the router's access point. To send commands to the new goPro, its IP address needs to be known from the router's settings page as per steps described in the previous section. 
+
+## 4. List of commands.
 
 1. Start recording -   
 `echo -n -e '\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\xfe\x53\x48\x01' >/dev/udp/<IP of the connected GoPro>/8484`
