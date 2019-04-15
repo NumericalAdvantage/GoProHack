@@ -28,6 +28,13 @@ Sniffing the packets in the air without connecting (associating) with any access
 #### Intuitive explanation
 Think of it like listening to people's conversations while you walk down the street. The people talking are strangers. You don't know them and they don't know you. Moreover, they have no idea that you are actually eavesdropping on their conversations.
 
+#### Use Case
+When we want to capture data packets on a network of which we are a part of.
+Steps to do this:
+1. Join the WiFi network.
+2. Start Wireshark and make sure "Capture in Promiscuous mode" is ticked in Options.
+3. Doing this should direct Wireshark to capture the packets which are not directly sent to us in the network.
+
 #### Technical explanation
 In monitor mode the SSID filter is disabled and all packets of all SSID's from the currently selected channel are captured. In "monitor mode", you capture packets from all the networks operating on a chosen channel, and the driver does not output plain ethernet, but needs to output more headers (there are 3 addresses in a 802.11 header, instead of just 2 addresses in the 802.3 ethernet headers). Only special wireless monitoring software is able to process packets in the format dumped by the driver in monitor mode.
 
@@ -40,6 +47,13 @@ In addition, monitor mode allows you to find hidden SSIDs. SSIDs aren't broadcas
 So in order to capture all traffic that the adapter can receive, the adapter must be put into "monitor mode", sometimes called "rfmon mode". In this mode, the driver will not make the adapter a member of any service set, so it won't support sending any traffic and will only supply received packets to a packet capture mechanism, not to the networking stack. This means that the machine will not be able to use that adapter for network traffic; if it doesn't have any other network adapters, it will not be able to.
 
 Steps in [7] need to be followed before we are able to capture packets in monitor mode. Basically, the device needs to be put in monitoring mode (by following the steps in [7]) and then packet capture needs to be started in Wireshark.
+
+#### Use Case
+When we want to capture data packets on a network of which we are not a part of.
+Steps to do this:
+1. Follow the steps in [7] to start a "monitoring interface" with the WiFi adapter.
+2. Start Wireshark and start capture on this newly created interface.
+3. Doing this should direct Wireshark to capture the packets of all the networks which are visible to the WiFi adapter. 
 
 ### References:
 1. https://wiki.wireshark.org/CaptureSetup/WLAN#Linux
