@@ -7,29 +7,23 @@
 5. **One gp connects and I take a photo (GP was originally in video mode)** - Did not observe anything very peculiar in this run. Might need to look again.
 6. **One gp connects and I change the mode once** - Only one message stood out. I have marked it and will try to use it to switch modes using the router later. However, the data isn't exactly legible and if it is dependent on some previously sent data (like the counter/sequence) then i would be helpless.  
 7. **One gp connects and I change the mode twice** - Was able to pinpoint the messages which were causing the switch. Noticed that there is a subtle change in the message but not sure if that has got to do with the sequencing and other parts of the protocol or the mode switch itself. Note that I still don't know what the message actually "means". This is just rote pattern matching.
-8. **Two gp connect** - Found some issues with SR and GP's. Like one of the GP's didn't connect but the SR said it had two connections! Could not put the SR back into the pairing mode once one GP connected and I wanted to connect another one. Another time the SR said it had only one camera but was actually controlling two. Only after a while did it correct itself. Also, if we had prior connections, then the SR when switched on, automatically connects to the GP's. The channel was switched all of a sudden. Not sure what triggered it or why. But this is the first time I am observing it. And then next time it switched it back again. But the strangest part was that No UDP data was generated.
-9. Two gp connect (both have default mode photo) and I take a picture.
-10. Two gp connect (both have default mode video) and I switch mode and take a picture.
-11. Two gp connect (one has default mode video and the other has default mode picture) and I switch modes to video and take a video.
-12. Two gp connect (one has default mode video and the other has default mode picture) and I switch modes to picture and take a photo.
-13. Two gp connect (one has video mode, other has burst mode) and I switch modes to picture and take a photo.
+8. **Two gp connect** - Found some issues with SR and GP's. a) One of the GP's didn't connect but the SR said it had two connections. b) Could not put the SR back into the pairing mode once one GP connected and I wanted to connect another one. c) The SR said it had only one camera but was actually controlling two. Only after a while did it correct itself. d) The channel was switched all of a sudden. Not sure what triggered it or why. But this is the first time I am observing it. Just an observation - If we had prior connections, then the SR when switched on, automatically connects to the GP's (and continues with old sequence number). But the strangest part was that No UDP data was generated for this reconnection. So not sure how the SR is able to "remember" the sequence number seen in some UDP messages. It is possible that it has some non volatile memory inside. Not sure if all these things would be necessary to figure out the protocol, but cataloging the observations nonetheless. Now about the "normal scenario" where two GP's make "fresh connections with the SR" - As expected, no UDP messages are generated.
+9. **Two gp connect (both have mode as photo mode set, but default mode is set to video) and I want to take a picture** - First, the GP's automatically switch to video mode when connected to the SR. Both GP's had default mode = video mode. So the conclusion here is that, on connection to the SR, they are directed by the the SR to switch to their default mode. Haven't noticed same behavior when GP's were connected to the LINKSYS AP. But need to check again. As expected, there is duplication of the DHCP messages from the SR. Then the SR sends the same message to both GP's (the sequence number stuff) and the messages reply same thing. Apart from the sequence messages, whose purpose I still don't quite understand, I could see the shutter open and release messages.
+10. **Two gp connect (both have default mode set to video) and I switch mode and take a picture** - Spotted the message used by the SR to switch mode from Video to Photo. I can see that there is not a generic "switch mode to next mode" message. How it works is, there are set messages to switch modes. Which is not necessary in my view, because the SR can only "cycle through" the modes one by one. So just a single "switch mode" message should have sufficed, but anyway. Also, the GP's send the same message back to the SR with a small change (an extra '00' in between). I think this is acting like a "confirmation". Perhaps the SR is programmed to send the same command again after some time if it doesn't receive this acknowledgement.
+11. **Two gp connect (both have default mode set to photo) and I switch modes to burst and take a burst** - Was able to spot the message used to do the switch. Apart from the message being a bit different from the "switch to photo mode" command, the behavior is pretty much same.
+12. **Two gp connect (both have default mode set to burst) and I switch modes to time lapse and take a burst** Found a bug. Eventhough the default mode was set to Burst, the GP's started in Photo. But was able to spot the message used to switch mode to timelapse.
+13. **Two gp connect (both have default mode set to time lapse) and I switch modes to video and take a video** - Found the message used to switch to video.
 
+#### Summary
 
-###### In summary, the protocol is much more complex that I thought. There is constant back and forth of UDP messages between the SR and the GP and the meaning of the messages is not clear. Even running the connection between one GP and SR for less than 15 seconds generates around 120+ UDP messages.
+###### Ask for the packet capture file corresponding to each of the above points using Wireshark to get more details.
+
+###### The protocol is much more complex that I thought. There is constant back and forth of UDP messages between the SR and the GP and the meaning of the messages is not clear. Even running the connection between one GP and SR for less than 15 seconds generates around 120+ UDP messages.
 ###### I actually have a suspicion that there is more than one way to do things like taking a picture or start/stop of video.
 ###### The "big messages" that I observed in some runs were not present in others. I think they might be carrying data about the camera settings, etc. They don't make any sense when converted to ASCII, which means they are using some sort of look up tables or messaging codes type approach or something similar.
 ###### I think it would help (but only a little) if I had a "live" way of viewing the packet capture dump file.
 ###### Have identified the messages which cause the mode switch. Will be testing them through the router soon.
-###### The SR fucntionality is not perfect when it comes to handling more than one GP. There are definitely bugs. I doubt they have many users for multiple GP with a single SR configuration. Because I could easily reproduce a bug or two.
-###### I didn't finish 9 thru 13, but did just one run where I basically tried everything with multiple GP's like switching modes and activating the shutter. I don't think the mechanism to switch modes is same as in the case of a single GP. And it was a bit more complicated as expected. A lot of analysis is needed in my view.
-###### Not sure if moving forward with 9-13 is better or trying my hunches on the router is better/faster.
-
-## gitlab check-in
-
-1. check in the iwconfig script.
-2. check in the tables and scripts for sending UDP commands.
-
-## gitlab issue TC9
-1. perform analysis.
-2. formulate results in a table
-3. Create scripts.
+###### The SR functionality is not perfect when it comes to handling more than one GP. There are definitely bugs. I doubt they have many users for multiple GP with a single SR configuration. Because I could easily reproduce a bug or two.
+###### It has been been very hard to understand what all the load of messages are for. I am focusing more on functionality now rather than understanding each and every message.
+###### I know how to switch modes and make shutter on and off. That is pretty much what the SR does. Of course, since I don't know the entirety of the protocol, there may be caveats to what I think I know how to do. Good testing is one solution to validate the scripts (The scripts aren't ready yet, but I have the "raw material" for it).
+#### _The sequence number is definitely part of the UDP messages for the switch. Not sure whether it is a mandatory part though. Need to test this._
