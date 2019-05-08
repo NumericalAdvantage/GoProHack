@@ -13,6 +13,7 @@
 11. **Two gp connect (both have default mode set to photo) and I switch modes to burst and take a burst** - Was able to spot the message used to do the switch. Apart from the message being a bit different from the "switch to photo mode" command, the behavior is pretty much same.
 12. **Two gp connect (both have default mode set to burst) and I switch modes to time lapse and take a burst** Found a bug. Eventhough the default mode was set to Burst, the GP's started in Photo. But was able to spot the message used to switch mode to timelapse.
 13. **Two gp connect (both have default mode set to time lapse) and I switch modes to video and take a video** - Found the message used to switch to video.
+14. **One gp connects and we start recording a video. During the recording we use the HiTag functionality** - Despite identifying the message which is sent when the HiTag function is used on the Smart Remote, I could not duplicate the behavior. Further analysis is required to figure this out but the problem is that what worked for everything else, doesn't seem to work here. Perhaps some specific detail of the protocol is missing. Hard to guess what it is.
 
 #### Summary
 
