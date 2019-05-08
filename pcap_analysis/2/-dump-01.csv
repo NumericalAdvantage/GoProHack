@@ -1,0 +1,7 @@
+
+BSSID, First time seen, Last time seen, channel, Speed, Privacy, Cipher, Authentication, Power, # beacons, # IV, LAN IP, ID-length, ESSID, Key
+F4:DD:9E:AA:DD:72, 2019-04-24 14:20:24, 2019-04-24 14:21:24, 11,  54, OPN ,       ,   , -15,      531,       21,  10. 71. 79.  4,  22, HERO-RC-A1111425450879, 
+
+Station MAC, First time seen, Last time seen, Power, # packets, BSSID, Probed ESSIDs
+04:41:69:75:1C:D4, 2019-04-24 14:21:13, 2019-04-24 14:21:23, -17,       30, F4:DD:9E:AA:DD:72, HERO-RC-A1111425450879
+
