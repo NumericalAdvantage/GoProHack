@@ -61,10 +61,10 @@ for x in range(0, len(Cameras)):
             urllib2.urlopen(Cameras[x].commands[y])
             time.sleep(sleep_time)
 
-
 #References :
 #1. https://askubuntu.com/questions/16584/how-to-connect-and-disconnect-to-a-network-manually-in-terminal
 #2. https://askubuntu.com/questions/117065/how-do-i-find-out-the-name-of-the-ssid-im-connected-to-from-the-command-line
 #3. https://docs.python.org/3/library/subprocess.html#subprocess.check_output
 #4. https://docs.python.org/3/library/dataclasses.html
 #5. https://hackernoon.com/a-brief-tour-of-python-3-7-data-classes-22ee5e046517
+#6. https://stackoverflow.com/questions/17178483/how-do-you-send-an-http-get-web-request-in-python
