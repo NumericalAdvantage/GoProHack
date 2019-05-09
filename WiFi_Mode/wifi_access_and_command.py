@@ -54,9 +54,10 @@ for x in range(0, len(Cameras)):
     time.sleep(sleep_time * 2)
     check_command = "iwgetid -r"
     out =  subprocess.check_output(check_command, stderr=subprocess.STDOUT, shell=True)
-    if out == Cameras[x].name:
+    if out.replace(" ", "").replace("\n", "") == Cameras[x].name:
         print("Camera Connected")
         for y in range(0, len(Cameras[x].commands)):
+            print("Sending command: ", Cameras[x].commands[y], " to camera: ", x)
             urllib2.urlopen(Cameras[x].commands[y])
             time.sleep(sleep_time)
 
