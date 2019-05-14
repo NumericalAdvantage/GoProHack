@@ -1,10 +1,13 @@
 import sys
 import gp_wifi
 
+#the camera object used to store the information of the cameras as read from the 
+#config file.
 Cameras = []
 gp_wifi.cameraConfig.readConfig(Cameras)
 print(str(len(Cameras)) +  " Camera(s) configured.")
 
+#This function always needs to be called in the beginning. 
 if gp_wifi.initialize() == False:
     print("Initialization failed. Exiting..")
     sys.exit()
