@@ -52,7 +52,7 @@ def checkIfConnected(CameraName, time_delay, number_of_retries):
 def sendCommand(command):
     try:
         print("Sending command: " + command)
-        subprocess.call("curl --verbose" + command, shell=True)
+        subprocess.call("curl --verbose " + command, shell=True)
         return True
     except Exception as exc:
         print(exc)
