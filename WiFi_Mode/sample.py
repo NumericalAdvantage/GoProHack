@@ -68,7 +68,6 @@ else:
         print("Sending command failed.")
 
 #Switch to cam 1 and set the current system date and time as camera date and time
-
 if gp_wifi.createNewConnection("/etc/cam1.conf", "wlp4s0") == False:
     print("Could not connect to Camera. Exiting..")
     sys.exit()
