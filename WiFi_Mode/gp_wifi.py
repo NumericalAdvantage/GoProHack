@@ -4,6 +4,7 @@ import signal
 import subprocess
 import time
 import cameraConfig
+from urllib.request import urlopen
 
 #Called only once during the beginning of the experiment. 
 def initialize():
@@ -52,6 +53,7 @@ def checkIfConnected(CameraName, time_delay, number_of_retries):
 def sendCommand(command):
     try:
         print("Sending command: " + command)
+        #urlopen(command)
         subprocess.call("curl --verbose " + command, shell=True)
         return True
     except Exception as exc:
